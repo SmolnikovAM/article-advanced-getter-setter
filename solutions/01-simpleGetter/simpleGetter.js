@@ -8,9 +8,9 @@ function defineComputedField(obj, computedName, args, clb) {
       return clb(...args.map(x => this[x]));
     },
     set() {
-      throw new Error('Assignment to computed property');
+      throw new Error("Assignment to computed property");
     },
-    enumerable: true,
-    // configurable: false, // false by default
+    enumerable: true
+    // configurable: false // false by default
   });
 }
