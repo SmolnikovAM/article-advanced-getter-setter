@@ -1,19 +1,19 @@
 const obj = createSmartObject({
-  name: 'Vasya',
-  surname: 'Ivanov',
-  patronymic: 'Olegovich',
+  name: "Vasya",
+  surname: "Ivanov",
+  patronymic: "Olegovich"
 });
 
 defineComputedField(
   obj,
-  'fullName',
-  ['name', 'surname', 'patronymic'],
-  (name, surname, patronimic) => {
-    return name + ' ' + surname + ' ' + patronymic;
-  },
+  "fullName",
+  ["name", "surname", "patronymic"],
+  (name, surname, patronymic) => {
+    return name + " " + surname + " " + patronymic;
+  }
 );
 
 console.log(obj.fullName); // Vasya Ivanov Olegovich
-obj.surname = 'Petrov';
+obj.surname = "Petrov";
 console.log(obj.fullName); // Vasya Petrov Olegovich
-obj.fullName = 'foo'; // error
+obj.fullName = "foo"; // error
