@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "add-to-gist": "node ./scripts/addToGistFolder"
+    "add-to-gist": "node ./scripts/addFilesToGist/addFilesToGist"
   },
   "author": "Andrei Smolnikov (andr.sml@gmail.com)",
   "license": "ISC",
