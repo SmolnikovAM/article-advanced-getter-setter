@@ -3,7 +3,7 @@ const { token, login } = require("../../token.js");
 
 const pathToGetPublicGists = `/users/${login}/gists`;
 const pathToCrateGist = "/gists";
-const pathToUpdateGist = gistId => `/gists/${gistId}`;
+const pathToSingleGistById = gistId => `/gists/${gistId}`;
 
 function getStandartOptions() {
   return {
@@ -54,6 +54,14 @@ function getAllGistsAPI() {
   return githubRequest(options).then(res => JSON.parse(res));
 }
 
+function getGistByIdAPI(gistId) {
+  const options = getStandartOptions();
+  const path = pathToSingleGistById(gistId);
+  const method = "GET";
+  Object.assign(options, { path, method });
+  return githubRequest(options).then(res => JSON.parse(res));
+}
+
 function createGistAPI(data) {
   const options = getStandartOptions();
   const path = pathToCrateGist;
@@ -64,10 +72,15 @@ function createGistAPI(data) {
 
 function updateGistAPI(gistId, data) {
   const options = getStandartOptions();
-  const path = pathToUpdateGist(gistId);
+  const path = pathToSingleGistById(gistId);
   const method = "POST";
   Object.assign(options, { path, method });
   return githubRequest(options, data);
 }
 
-module.exports = { updateGistAPI, getAllGistsAPI, createGistAPI };
+module.exports = {
+  updateGistAPI,
+  getAllGistsAPI,
+  createGistAPI,
+  getGistByIdAPI
+};

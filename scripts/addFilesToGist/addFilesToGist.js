@@ -3,7 +3,7 @@ const path = require("path");
 
 const { getAllGistsAPI, createGistAPI, updateGistAPI } = require("./apiGist");
 const { getModifiedStagedFilesFromGit } = require("./apiStaged");
-const { appendInfo } = require("./addInfo");
+const { appendInfo, commitInfo } = require("./addInfo");
 
 const SOLUTIONS_FOLDER = "solutions";
 const FOLDERS = [SOLUTIONS_FOLDER];
@@ -47,6 +47,7 @@ function gistNameFromPath(filename) {
 
 async function updateGists(staged, allGists) {
   const gistByFile = new Map();
+  let newCreated = false;
   allGists.forEach(gist => {
     Reflect.ownKeys(gist.files).forEach(name => {
       gistByFile.set(name, gist);
@@ -61,14 +62,21 @@ async function updateGists(staged, allGists) {
   for ({ filename, gistFileName } of files) {
     const gist = gistByFile.get(gistFileName);
     if (gist) {
+      const { html_url: url } = gist;
       await updateGist({ gist, filename, gistFileName });
+      await appendInfo({ url, gistFileName });
     } else {
       const data = await createGist({ filename, gistFileName });
       const jsonData = JSON.parse(data);
-      const { url } = jsonData;
-      if (url) appendInfo({ url, gistFileName });
+      const { html_url: url } = jsonData;
+      if (url) {
+        await appendInfo({ url, gistFileName });
+        newCreated = true;
+      }
     }
   }
+  //if (newCreated)
+  await commitInfo();
 }
 
 async function run() {
