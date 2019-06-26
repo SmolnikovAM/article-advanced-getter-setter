@@ -1,0 +1,10 @@
+      ---- prop1      // get/set on _data.prop1
+      | -- prop2      // get/set on _data.prop2
+nObj--|..........
+      | -- propN      // get/set on _data.propN
+      | -- computedF  // get/set on _data.computedF 
+      ---- _data | -- prop1 //original data
+                 | -- prop2 //original data
+                 |..........
+                 | -- propN //original data
+                 ---- computedF //original data
